@@ -12,14 +12,16 @@ npm install load-conf
 
 ## Use
 
-`.load(applicationName, [options])`
+`.load(applicationName, [options], [callback])`
 
 * applicationName - used to define the config path
 * options (object) - optional parameters
   * watch (boolean) - watch the filesystem for changes
   * default (object) - default object to use for the configuration
     * applicationName's configuration is cached for the load-conf module
-    * this means that only the *first* set of defaults to load will be applied
+    * this means that subsequent `defaults` to load will be merged with prior defaults
+* callback - if undefined will use synchronous file loading, otherwise will be async
+  * callback will be `function(err,config)`
 
 ```
 var conf = require("load-conf").load("APPNAME", { watch:true } /*actively watch for changes*/);
@@ -61,4 +63,6 @@ The resulting set...
 
 ## Methodology
 
-The application files are merged together via [lodash's .merge](http://lodash.com/docs#merge) method.
+The application files are merged together via [lodash's .merge method](http://lodash.com/docs#merge) method.
+
+If a watch is specified, then [node's fs.watchFile method](http://nodejs.org/docs/latest/api/fs.html#fs_fs_watchfile_filename_options_listener) is used with poling set to 15 seconds.  Changes result in the options being re-merged.
