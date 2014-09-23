@@ -12,9 +12,11 @@ npm install load-conf
 
 ## Use
 
-`.load(applicationName, [options], [callback])`
+`require('load-conf').load(applicationName, [options], [callback])`
 
 * applicationName - used to define the config path
+  * this input is case sensitive (on filesystems with case-sensitive file names)
+  * You should not use characters that aren't allowed in the file system.
 * options (object) - optional parameters
   * watch (boolean) - watch the filesystem for changes
   * default (object) - default object to use for the configuration
@@ -23,15 +25,12 @@ npm install load-conf
 * callback - if undefined will use synchronous file loading, otherwise will be async
   * callback will be `function(err,config)`
 
-```
-var conf = require("load-conf").load("APPNAME", { watch:true } /*actively watch for changes*/);
-```
 
 ## Paths
 
 The loader will look for and load the configuration files in the listed order, with each file overriding the prior file's settings.
 
-`APPNAME` is the appname specified in the load command.
+`APPNAME` is the applicationName specified in the load command.
 `NODE_ENV` is an environment variable (defaults to `development`)
 `~` will be `%HOME%` or `%USERPROFILE%`
 
