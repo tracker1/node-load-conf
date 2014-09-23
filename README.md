@@ -33,6 +33,7 @@ The loader will look for and load the configuration files in the listed order, w
 
 `APPNAME` is the appname specified in the load command.
 `NODE_ENV` is an environment variable (defaults to `development`)
+`~` will be `%HOME%` or `%USERPROFILE%`
 
 Configuration Paths (global to user/active directory specific)
 
